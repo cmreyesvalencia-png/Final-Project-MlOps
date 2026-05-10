@@ -1,0 +1,32 @@
+﻿services:
+  fraud-detection-api:
+    build: .
+    container_name: fraud-detection-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - fraud-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  redis:
+    image: redis:alpine
+    container_name: fraud-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - fraud-network
+
+networks:
+  fraud-network:
+    driver: bridge
