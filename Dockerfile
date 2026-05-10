@@ -16,9 +16,8 @@ COPY api.py .
 COPY train_model.py .
 COPY test_api.py .
 
-# Copy trained model files (these are the missing pieces!)
-COPY fraud_model.pkl .
-COPY scaler.pkl .
+# Note: Model files (fraud_model.pkl, scaler.pkl) are not included in GitHub
+# They should be mounted as volumes or downloaded separately in production
 
 # Expose port
 EXPOSE 8000
